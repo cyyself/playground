@@ -593,3 +593,31 @@ index 45e05fc2..00000000
 -class WithStreamingPassthrough extends Config((site, here, up) => {
 -  case StreamingPassthroughKey => Some(StreamingPassthroughParams(depth = 8))
 -})
+diff --git a/generators/chipyard/src/main/scala/config/MMIOAcceleratorConfigs.scala b/generators/chipyard/src/main/scala/config/MMIOAcceleratorConfigs.scala
+index 16e6b313..6af64e4b 100644
+--- a/generators/chipyard/src/main/scala/config/MMIOAcceleratorConfigs.scala
++++ b/generators/chipyard/src/main/scala/config/MMIOAcceleratorConfigs.scala
+@@ -36,11 +36,6 @@ class InitZeroRocketConfig extends Config(
+   new chipyard.config.AbstractConfig)
+ // DOC include end: InitZeroRocketConfig
+ 
+-class StreamingPassthroughRocketConfig extends Config(
+-  new chipyard.example.WithStreamingPassthrough ++          // use top with tilelink-controlled streaming passthrough
+-  new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+-  new chipyard.config.AbstractConfig)
+-
+ // DOC include start: StreamingFIRRocketConfig
+ class StreamingFIRRocketConfig extends Config (
+   new chipyard.example.WithStreamingFIR ++                  // use top with tilelink-controlled streaming FIR
+@@ -57,11 +52,3 @@ class LargeNVDLARocketConfig extends Config(
+   new nvidia.blocks.dla.WithNVDLA("large", true) ++         // add a large NVDLA with synth. rams
+   new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+   new chipyard.config.AbstractConfig)
+-
+-class ManyMMIOAcceleratorRocketConfig extends Config(
+-  new chipyard.iobinders.WithDontTouchIOBinders(false) ++   // TODO: hack around dontTouch not working in SFC
+-  new fftgenerator.WithFFTGenerator(numPoints=8, width=16, decPt=8) ++ // add 8-point mmio fft at the default addr (0x2400) with 16bit fixed-point numbers.
+-  new chipyard.example.WithStreamingPassthrough ++          // use top with tilelink-controlled streaming passthrough
+-  new chipyard.example.WithStreamingFIR ++                  // use top with tilelink-controlled streaming FIR
+-  new freechips.rocketchip.subsystem.WithNBigCores(1) ++
+-  new chipyard.config.AbstractConfig)
