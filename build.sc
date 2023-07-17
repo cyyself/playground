@@ -457,7 +457,7 @@ object pk extends Module {
 // Dummy
 
 object playground extends CommonModule {
-  override def moduleDeps = super.moduleDeps ++ Seq(myrocketchip, inclusivecache, blocks, shells, firesim, boom, chipyard, chipyard.fpga, chipyard.utilities, mychiseltest)
+  override def moduleDeps = super.moduleDeps ++ Seq(chipyard.firechip, firesim, firesim.midas)
 
   // add some scala ivy module you like here.
   override def ivyDeps = Agg(
@@ -465,11 +465,7 @@ object playground extends CommonModule {
     ivys.pprint
   )
 
-  // use scalatest as your test framework
-  object tests extends Tests with TestModule.ScalaTest {
-    override def ivyDeps = Agg(
-      ivys.scalatest
-    )
-    override def moduleDeps = super.moduleDeps ++ Seq(mychiseltest)
-  }
+  def generator(args: String*) = runMain("chipyard.Generator", args: _*)
+
+  def goldengate(args: String*) = runMain("midas.stage.GoldenGateMain", args: _*)
 }

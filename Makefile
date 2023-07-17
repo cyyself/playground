@@ -1,3 +1,6 @@
+CONFIG ?= firesim.firesim:FireSimRocket4GiBDRAMConfig
+PLATFORM_CONFIG ?= BaseXilinxVCU118Config
+
 init:
 	git submodule update --init
 
@@ -28,3 +31,10 @@ test:
 
 clean:
 	git clean -fd
+
+rtl/firesim.fir:
+	mkdir -p rtl
+	mill -i -j 0 playground.generator --target-dir ./rtl --name firesim --top-module firesim.firesim.FireSim --legacy-configs $(CONFIG)
+
+rtl/firesim-generated.sv: rtl/firesim.fir
+	mill -i -j 0 playground.goldengate -i rtl/firesim.fir -td ./rtl -faf ./rtl/firesim.anno.json -ggcp firesim.firesim -ggcs $(PLATFORM_CONFIG) --output-filename-base FireSim-generated --no-dedup
