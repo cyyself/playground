@@ -38,3 +38,4 @@ rtl/firesim.fir:
 
 rtl/FireSim-generated.sv: rtl/firesim.fir
 	mill -i -j 0 playground.goldengate -i rtl/firesim.fir -td ./rtl -faf ./rtl/firesim.anno.json -ggcp firesim.firesim -ggcs $(PLATFORM_CONFIG) --output-filename-base FireSim-generated --no-dedup
+	grep -sh ^ rtl/firrtl_black_box_resource_files.f | xargs cat >> $@
