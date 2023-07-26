@@ -1,7 +1,7 @@
-diff --git a/src/main/scala/barstools/iocell/chisel/IOCell.scala b/src/main/scala/barstools/iocell/chisel/IOCell.scala
+diff --git a/iocell/src/main/scala/barstools/iocell/chisel/IOCell.scala b/iocell/src/main/scala/barstools/iocell/chisel/IOCell.scala
 index 6d444936..ba99b8c8 100644
---- a/src/main/scala/barstools/iocell/chisel/IOCell.scala
-+++ b/src/main/scala/barstools/iocell/chisel/IOCell.scala
+--- a/iocell/src/main/scala/barstools/iocell/chisel/IOCell.scala
++++ b/iocell/src/main/scala/barstools/iocell/chisel/IOCell.scala
 @@ -114,7 +114,7 @@ case class GenericIOCellParams() extends IOCellTypeParams {
  
  object IOCell {
