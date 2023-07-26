@@ -8,9 +8,6 @@
 [submodule "treadle"]
 	path = dependencies/treadle
 	url = git@github.com:chipsalliance/treadle.git
-[submodule "chisel-testers2"]
-	path = dependencies/chisel-testers2
-	url = git@github.com:ucb-bar/chisel-testers2.git
 [submodule "cde"]
 	path = dependencies/cde
 	url = git@github.com:chipsalliance/cde.git

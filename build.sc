@@ -13,7 +13,6 @@ import $file.dependencies.treadle.build
 import $file.dependencies.cde.build
 import $file.dependencies.`berkeley-hardfloat`.build
 import $file.dependencies.`rocket-chip`.common
-import $file.dependencies.`chisel-testers2`.build
 
 // Global Scala Version
 object ivys {
@@ -69,8 +68,6 @@ object mychisel3 extends dependencies.chisel.build.chisel3CrossModule(ivys.sv) {
 
   def treadleModule: Option[PublishModule] = Some(mytreadle)
 
-  def chiseltestModule: Option[PublishModule] = Some(mychiseltest)
-
   override def scalacOptions = T {
     super.scalacOptions() ++ Agg("-Ymacro-annotations")
   }
@@ -119,13 +116,6 @@ object blocks extends CommonModule with SbtModule {
   override def millSourcePath = os.pwd / "dependencies" / "rocket-chip-blocks"
 
   override def moduleDeps = super.moduleDeps ++ Seq(myrocketchip)
-}
-
-// UCB
-object mychiseltest extends dependencies.`chisel-testers2`.build.chiseltestCrossModule(ivys.sv) {
-  override def scalaVersion = ivys.sv
-  def chisel3Module: Option[PublishModule] = Some(mychisel3)
-  def treadleModule: Option[PublishModule] = Some(mytreadle)
 }
 
 object myhardfloat extends dependencies.`berkeley-hardfloat`.build.hardfloat {
@@ -275,7 +265,7 @@ object sha3 extends CommonModule with SbtModule {
 
   override def millSourcePath = os.pwd / "dependencies" / "sha3"
 
-  override def moduleDeps = super.moduleDeps ++ Seq(myrocketchip, mychiseltest, firesim.midas)
+  override def moduleDeps = super.moduleDeps ++ Seq(myrocketchip, firesim.midas)
 }
 
 object ibex extends CommonModule with SbtModule {
