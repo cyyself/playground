@@ -15,7 +15,7 @@ import $file.dependencies.`rocket-chip`.common
 
 // Global Scala Version
 object ivys {
-  val sv = "2.13.10"
+  val sv = "2.13.11"
   val upickle = ivy"com.lihaoyi::upickle:1.3.15"
   val oslib = ivy"com.lihaoyi::os-lib:0.7.8"
   val pprint = ivy"com.lihaoyi::pprint:0.6.6"
