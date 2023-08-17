@@ -30,6 +30,8 @@ object ivys {
   val playjson =ivy"com.typesafe.play::play-json:2.9.4"
   val breeze = ivy"org.scalanlp::breeze:1.1"
   val parallel = ivy"org.scala-lang.modules:scala-parallel-collections_3:1.0.4"
+  val spire = ivy"org.typelevel::spire:0.17.0"
+  val mainargs = ivy"com.lihaoyi::mainargs:0.4.0"
 }
 
 // For modules not support mill yet, need to have a ScalaModule depend on our own repositories.
@@ -223,19 +225,46 @@ object gemmini extends CommonModule with SbtModule {
 // Dummy
 
 object playground extends CommonModule {
-  override def moduleDeps = super.moduleDeps ++ Seq(myrocketchip, inclusivecache, blocks, firesim, boom, chipyard, chipyard.utilities, mychiseltest)
+  override def moduleDeps = super.moduleDeps ++ Seq(myrocketchip, inclusivecache, blocks, gemmini)
 
   // add some scala ivy module you like here.
   override def ivyDeps = Agg(
     ivys.oslib,
-    ivys.pprint
+    ivys.pprint,
+    ivys.mainargs
   )
 
-  // use scalatest as your test framework
-  object tests extends Tests with TestModule.ScalaTest {
-    override def ivyDeps = Agg(
-      ivys.scalatest
+  def lazymodule: String = "freechips.rocketchip.system.ExampleRocketSystem"
+
+  def configs: String = "playground.PlaygroundConfig"
+
+  def elaborate = T {
+    mill.modules.Jvm.runSubprocess(
+      finalMainClass(),
+      runClasspath().map(_.path),
+      forkArgs(),
+      forkEnv(),
+      Seq(
+        "--dir", T.dest.toString,
+        "--lm", lazymodule,
+        "--configs", configs
+      ),
+      workingDir = os.pwd,
     )
-    override def moduleDeps = super.moduleDeps ++ Seq(mychiseltest)
+    PathRef(T.dest)
+  }
+
+  def verilog = T {
+    os.proc("firtool",
+      elaborate().path / s"${lazymodule.split('.').last}.fir",
+      "--disable-annotation-unknown",
+      "-dedup",
+      "-O=debug",
+      "--split-verilog",
+      "--preserve-values=named",
+      "--output-annotation-file=mfc.anno.json",
+      s"-o=${T.dest}"
+    ).call(T.dest)
+    PathRef(T.dest)
   }
 }
