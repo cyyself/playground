@@ -1,5 +1,7 @@
 package playground
 
+import freechips.rocketchip.subsystem.WithEdgeDataBits
+import gemmini._
 import org.chipsalliance.cde.config.Config
 
 class TestConfig
@@ -12,7 +14,7 @@ class TestConfig
 
 class PlaygroundConfig
     extends Config(
-      (new gemmini.DefaultGemminiConfig ++ new TestConfig)
+      (new DefaultGemminiConfig ++ new WithEdgeDataBits(128) ++ new TestConfig)
         .orElse(new freechips.rocketchip.subsystem.WithInclusiveCache)
         .orElse(new freechips.rocketchip.system.DefaultConfig)
     )

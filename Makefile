@@ -23,5 +23,11 @@ bsp:
 compile:
 	mill -i -j 0 __.compile
 
+out/playground/elaborate.dest/ExampleRocketSystem.fir:
+	mill -i -j 0 playground.elaborate
+
+out/playground/verilog.dest/ExampleRocketSystem.sv: out/playground/elaborate.dest/ExampleRocketSystem.fir
+	mill -i -j 0 playground.verilog
+
 clean:
 	git clean -fd
