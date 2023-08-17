@@ -80,7 +80,6 @@ This repository always tracks remote developing branches, it may need some patch
 <!-- BEGIN-PATCH -->
 barstools https://github.com/ucb-bar/barstools/pull/124.diff  
 chisel https://github.com/chipsalliance/chisel/pull/3371.diff  
-chipyard https://github.com/ucb-bar/chipyard/pull/1296.diff  
 firesim https://github.com/firesim/firesim/pull/1250.diff  
 firesim https://github.com/firesim/firesim/pull/1349.diff  
 <!-- END-PATCH -->
